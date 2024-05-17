@@ -30,6 +30,16 @@ body {
     text-align: center;
     color: whitesmoke;
 }
-.navbar navbar-light bg-light{
-    background-color:white;
+.navbar {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+    flex-wrap: wrap;
+    background-color: #f8f9fa !important;
 }
