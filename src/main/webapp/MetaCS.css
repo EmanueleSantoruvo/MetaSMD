@@ -42,4 +42,8 @@ body {
     padding: .5rem 1rem;
     flex-wrap: wrap;
     background-color: #f8f9fa !important;
+    border-radius: 10px 10px 10px 10px;
+}
+.navbar.border_radius{
+
 }
