@@ -1,30 +1,30 @@
 package com.example.metasmd;
+
 import java.io.IOException;
-import jakarta.servlet.RequestDispatcher;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 /**
  * Servlet implementation class MyServlet
  */
 @WebServlet("/MyServlet")
-class MYSERVLET extends HttpServlet {
+public class MyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MYSERVLET() {
+    public MyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
-
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,48 +33,30 @@ class MYSERVLET extends HttpServlet {
         // TODO Auto-generated method stub
     }
 
-
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
 
-        RequestDispatcher dispatcher;
-
-        String nome= request.getParameter("nome");
-        String cognome= request.getParameter("cognome");
-
-        request.setAttribute("nome", nome);
-        request.setAttribute("cognome", cognome);
-
-        dispatcher=getServletContext().getRequestDispatcher("/jsp/feedback.jsp");
-        dispatcher.forward(request,response);
-
-
-        //response.setContentType("text/html");
-        //PrintWriter out=response.getWriter();
-        //String nome=request.getParameter("nome");
-        //String cognome=request.getParameter("cognome");
-
         try {
+            HttpClient client = HttpClient.newHttpClient();
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.football-data.org/v4/competitions/SA"))
+                    .header("X-Auth-Token", "7263e66e5c6d4fcf88b42ef8254a3329")
+                    .build();
 
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "utente");
+            HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(httpResponse.statusCode());
+            System.out.println(httpResponse.body());
 
-            PreparedStatement stat= conn.prepareStatement("insert into controllo_accessi values(default,?,?)");
-            stat.setString(1, nome);
-            stat.setString(2, cognome);
-            stat.executeUpdate();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(httpResponse.body());
 
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
         }
     }
-
 }
