@@ -31,6 +31,7 @@ public class MyServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
+
     }
 
     /**
@@ -38,25 +39,6 @@ public class MyServlet extends HttpServlet {
      */
     protected void doPost(HttpRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.football-data.org/v4/competitions/SA"))
-                    .header("X-Auth-Token", "7263e66e5c6d4fcf88b42ef8254a3329")
-                    .build();
-
-            HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(httpResponse.statusCode());
-            System.out.println(httpResponse.body());
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(httpResponse.body());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
-        }
+        
     }
 }
