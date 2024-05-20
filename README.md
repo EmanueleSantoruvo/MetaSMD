@@ -1,8 +1,8 @@
-Yes Yes Yes 
-But meta is a family
+# MetaSMD
+Il grande progetto della vita
 
-THE FAMILY:
-Santoruvo
-Milo
-Mininni
-Dimundo
+La family:
+- Emanuele Santoruvo
+- Stefania Dimundo
+- Vincenzo Mininni
+- Andrea Milo
