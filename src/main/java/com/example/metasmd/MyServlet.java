@@ -31,6 +31,16 @@ public class MyServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
+        String squadra = request.getParameter("squadra");
+        SceltaSquadra sceltaSquadra = new SceltaSquadra();
+        int teamId;
+
+        try {
+            teamId = sceltaSquadra.IdNome(squadra);
+        } catch (IllegalArgumentException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Nome della squadra non valido");
+            return;
+        }
 
     }
 
