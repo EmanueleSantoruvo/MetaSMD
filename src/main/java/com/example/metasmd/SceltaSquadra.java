@@ -1,5 +1,6 @@
 package com.example.metasmd;
 
+
 public class SceltaSquadra {
 
     public int IdNome(String squadra) {
